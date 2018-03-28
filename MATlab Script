@@ -54,7 +54,7 @@ for i = 1:length(subjects)
              
     end
 end
-%load() for your matfile - R is variable
+%load() for your matfile - R is variable - why is R the variable? Is R just arbitrary?
 %set idx = find(any(R==1,2)) to id vols to cut
 
        %load regression outliers file
@@ -68,3 +68,6 @@ end
         
         %Becomes new Y masked value
         Y = R;
+        
+        %Put above in a loop so each subject's "good" volumes slices go into snr calculation
+        
