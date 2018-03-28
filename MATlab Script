@@ -30,7 +30,7 @@ for i = 1:length(subjects)
         V = spm_vol(fullfile(study_dir,subject,session,func));
         Y = spm_read_vols(V);
         Y(G~=1)=NaN;
-        
+   
         % SNR
         if j==1
             snr(i,1) = nanmean(Y(:))/nanstd(Y(:));
@@ -56,3 +56,15 @@ for i = 1:length(subjects)
 end
 %load() for your matfile - R is variable
 %set idx = find(any(R==1,2)) to id vols to cut
+
+       %load regression outliers file
+        load('art_regression_outliers');
+        
+        %create index
+        idx = find(any(R == 1,2));
+        
+        %Remove bad volumes
+        R(idx,: = []);
+        
+        %Becomes new Y masked value
+        Y = R;
