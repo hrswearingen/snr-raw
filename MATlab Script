@@ -30,6 +30,11 @@ for i = 1:length(subjects)
         V = spm_vol(fullfile(study_dir,subject,session,func));
         Y = spm_read_vols(V);
         Y(G~=1)=NaN;
+        
+        %Create new  Y
+        load('art_regression_outliers_uarest.mat');
+        idx = find(any(R == 1,2));      
+        Y(:,:,:,idx) = [];
    
         % SNR
         if j==1
@@ -54,20 +59,11 @@ for i = 1:length(subjects)
              
     end
 end
+
+
 %load() for your matfile - R is variable - why is R the variable? Is R just arbitrary?
 %set idx = find(any(R==1,2)) to id vols to cut
 
-       %load regression outliers file
-        load('art_regression_outliers');
+    
         
-        %create index
-        idx = find(any(R == 1,2));
-        
-        %Remove bad volumes
-        R(idx,: = []);
-        
-        %Becomes new Y masked value
-        Y = R;
-        
-        %Put above in a loop so each subject's "good" volumes slices go into snr calculation
         
